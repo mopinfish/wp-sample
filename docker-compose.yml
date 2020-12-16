@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - ./mysql/mysql-datavolume:/var/lib/mysql
+    ports:
+      - 3306:3306
+    env_file: db_env
+
+  webapp:
+    image: wordpress:latest
+    restart: always
+    volumes:
+      - ./wordpress:/var/www/html
+    ports:
+      - 45678:80
+    env_file: webapp_env
+
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    env_file: nginx_env

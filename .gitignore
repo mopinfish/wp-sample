@@ -1,0 +1,4 @@
+wordpress/
+mysql/
+nginx/conf.d/rproxy.conf
+
