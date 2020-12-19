@@ -7,6 +7,10 @@ server {
   if ($request_uri ~* '(/wp-login.php|/wp-admin/.*\.php$)') {
     set $auth "Restricted";
   }
+  # wp-admin/admin-ajax.phpへの通信は許可する
+  if ($request_uri ~* '(/wp-admin/admin-ajax\.php$)') {
+    set $auth off;
+  }
 
   location / {
     auth_basic $auth;
