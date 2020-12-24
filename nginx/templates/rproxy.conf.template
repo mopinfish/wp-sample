@@ -2,7 +2,20 @@ server {
   listen 80;
   server_name localhost;
 
+  set $auth off;
+  # wp-adminへの認証設定
+  if ($request_uri ~* '(/wp-login.php|/wp-admin/.*\.php$)') {
+    set $auth "Restricted";
+  }
+  # wp-admin/admin-ajax.phpへの通信は許可する
+  if ($request_uri ~* '(/wp-admin/admin-ajax\.php$)') {
+    set $auth off;
+  }
+
   location / {
+    auth_basic $auth;
+    auth_basic_user_file /etc/nginx/.htpasswd;
+
     proxy_pass ${NGINX_PROXY_URL};
     proxy_redirect off;
     proxy_set_header Host                   $host;

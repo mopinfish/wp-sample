@@ -25,6 +25,7 @@ services:
     volumes:
       - ./nginx/templates:/etc/nginx/templates
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd
     ports:
       - 80:80
     env_file: nginx_env
